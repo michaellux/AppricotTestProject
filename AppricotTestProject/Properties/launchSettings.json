@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AppricotTestProject": {
+      "commandName": "Project",
+      "commandLineArgs": "-p \"C:\\Users\\Michaellux.DESKTOP-MUO1A9P\\IdeaProjects\\WhiteBoard\""
+    }
+  }
+}

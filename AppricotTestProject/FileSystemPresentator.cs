@@ -6,15 +6,7 @@ using System.Threading.Tasks;
 
 namespace AppricotTestProject
 {
-    internal enum OutputTypes
+    internal class FileSystemPresentator
     {
-        ToConsole,
-        ToFile
-    }
-
-    internal enum OutputViews
-    {
-        InBytes,
-        ForHuman
     }
 }
