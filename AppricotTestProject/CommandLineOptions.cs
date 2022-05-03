@@ -9,7 +9,7 @@ namespace AppricotTestProject
 {
     internal class CommandLineOptions
     {
-        private readonly OutputTypes outputType;
+        public readonly OutputTypes outputType;
         private readonly OutputViews outputView;
 
         public CommandLineOptions(bool quite, string path, string output, bool human)

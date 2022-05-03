@@ -8,9 +8,20 @@ namespace AppricotTestProject
 {
     internal class FileSystemPresentator
     {
-        public static void PrintFileNamesToConsole(FileSystemInfo fileSystemInfoItem)
+        public static void PrintFileSystemInfoItem(FileSystemCollector.FileSystemCollectorItem fileSystemInfoItem, OutputTypes outputType)
         {
-            Console.WriteLine(fileSystemInfoItem);
+            if (outputType == OutputTypes.ToConsole)
+            {
+                Console.WriteLine($"{fileSystemInfoItem.LevelInHierarchy} {fileSystemInfoItem.Name} ({fileSystemInfoItem.Size} bytes)");
+            }
+            else if (outputType == OutputTypes.ToFile)
+            {
+
+            }
+            else
+            {
+                throw new Exception("Unknown output type.");
+            }
         }
     }
 }

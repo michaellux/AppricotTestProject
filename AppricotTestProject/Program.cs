@@ -15,16 +15,19 @@ namespace AppricotTestProject
         {
             Console.WriteLine("Parser success");
             string? inputtedPathFromCommandLine = options.Path;
+            IEnumerable<FileSystemCollector.FileSystemCollectorItem>? fileSystemInfoCollection = null;
             if (InputDataManager.AnalyzeForCorrectnessTargetPath(inputtedPathFromCommandLine))
             {
-                foreach (var fileSystemInfoItem in FileSystemCrawler.Walk(new DirectoryInfo($@"{inputtedPathFromCommandLine}")))
-                {
-                    FileSystemPresentator.PrintFileNamesToConsole(fileSystemInfoItem);
-                }
+                fileSystemInfoCollection = FileSystemCrawler.Walk(new DirectoryInfo($@"{inputtedPathFromCommandLine}"), 0);
             }
             else
             {
-                FileSystemCrawler.Walk(new DirectoryInfo($@"{DefaultPaths.DefaultFolderPathForCrawl}"));
+                fileSystemInfoCollection = FileSystemCrawler.Walk(new DirectoryInfo($@"{DefaultPaths.DefaultFolderPathForCrawl}"), 0);
+            }
+
+            foreach (var fileSystemInfoItem in fileSystemInfoCollection)
+            {
+                FileSystemPresentator.PrintFileSystemInfoItem(fileSystemInfoItem, options.outputType);
             }
         }
 
