@@ -8,5 +8,9 @@ namespace AppricotTestProject
 {
     internal class FileSystemPresentator
     {
+        public static void PrintFileNamesToConsole(FileSystemInfo fileSystemInfoItem)
+        {
+            Console.WriteLine(fileSystemInfoItem);
+        }
     }
 }

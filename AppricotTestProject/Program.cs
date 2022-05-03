@@ -17,7 +17,10 @@ namespace AppricotTestProject
             string? inputtedPathFromCommandLine = options.Path;
             if (InputDataManager.AnalyzeForCorrectnessTargetPath(inputtedPathFromCommandLine))
             {
-                FileSystemCrawler.Walk(new DirectoryInfo($@"{inputtedPathFromCommandLine}"));
+                foreach (var fileSystemInfoItem in FileSystemCrawler.Walk(new DirectoryInfo($@"{inputtedPathFromCommandLine}")))
+                {
+                    FileSystemPresentator.PrintFileNamesToConsole(fileSystemInfoItem);
+                }
             }
             else
             {

@@ -9,33 +9,16 @@ namespace AppricotTestProject
     internal class FileSystemCrawler
     {
 		//based on: https://csharp.webdelphi.ru/algoritm-obxoda-dereva-katalogov-v-c-s-ispolzovaniem-rekursii/
-		public static void Walk(DirectoryInfo targetDirectory)
+		public static IEnumerable<FileSystemInfo> Walk(DirectoryInfo targetDirectoryInfo)
         {
             FileInfo[] files = null;
             DirectoryInfo[] subDirs = null;
+            yield return targetDirectoryInfo;
 
-            files = GetAllFilesInCurrentFolder(targetDirectory, files);
-
-            if (files != null)
-            {
-                PrintFileNamesToConsole(files);
-                WalkBySubDirectories(targetDirectory);
-            }
-        }
-
-        private static void PrintFileNamesToConsole(FileInfo[] files)
-        {
-            foreach (FileInfo fi in files)
-            {
-                Console.WriteLine(fi.FullName);
-            }
-        }
-
-        private static FileInfo[] GetAllFilesInCurrentFolder(DirectoryInfo root, FileInfo[] files)
-        {
+            //ReturnCurrentDirectoryWithFiles
             try
             {
-                files = root.GetFiles("*.*");
+                files = targetDirectoryInfo.GetFiles("*.*");
             }
             catch (UnauthorizedAccessException e)
             {
@@ -46,16 +29,21 @@ namespace AppricotTestProject
                 Console.WriteLine(e.Message);
             }
 
-            return files;
-        }
-
-        private static void WalkBySubDirectories(DirectoryInfo root)
-        {
-            DirectoryInfo[] subDirs = root.GetDirectories();
-            foreach (DirectoryInfo dirInfo in subDirs)
+            if (files == null) yield break;
+            foreach (var file in files)
             {
-                Walk(dirInfo);
+                Console.WriteLine(file.FullName);
+                yield return file;
             }
+
+            //WalkBySubDirectories
+            subDirs = targetDirectoryInfo.GetDirectories();
+            foreach (var dirInfo in subDirs)
+                foreach (var file in Walk(dirInfo))
+                    yield return file;
+
+            //yield return ReturnCurrentDirectoryWithFiles(targetDirectoryInfo, files);
+            //yield return WalkBySubDirectories(targetDirectoryInfo);
         }
     }
 }
