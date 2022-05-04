@@ -8,7 +8,7 @@ namespace AppricotTestProject
 {
     internal class FileSystemCollector
     {
-        
+        public static List<FileSystemCollectorItem> fileSystemCollectorItems = new List<FileSystemCollectorItem>();
         internal class FileSystemCollectorItem
         {
             private int levelInHierarchy;

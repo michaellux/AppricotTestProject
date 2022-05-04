@@ -8,11 +8,14 @@ namespace AppricotTestProject
 {
     internal class FileSystemPresentator
     {
-        public static void PrintFileSystemInfoItem(FileSystemCollector.FileSystemCollectorItem fileSystemInfoItem, OutputTypes outputType)
+        public static void PrintFileSystemItems(List<FileSystemCollector.FileSystemCollectorItem> fileSystemInfoItems, OutputTypes outputType)
         {
             if (outputType == OutputTypes.ToConsole)
             {
-                Console.WriteLine($"{fileSystemInfoItem.LevelInHierarchy} {fileSystemInfoItem.Name} ({fileSystemInfoItem.Size} bytes)");
+                foreach (var fileSystemInfoItem in fileSystemInfoItems)
+                {
+                    Console.WriteLine($"{fileSystemInfoItem.LevelInHierarchy} {fileSystemInfoItem.Name} ({fileSystemInfoItem.Size} bytes)");
+                }
             }
             else if (outputType == OutputTypes.ToFile)
             {

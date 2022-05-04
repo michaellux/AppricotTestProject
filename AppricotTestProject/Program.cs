@@ -2,8 +2,9 @@
 
 namespace AppricotTestProject
 {
-    internal class Program
+    static internal class Program
     {
+        
         static void Main(string[] args)
         {
             Parser.Default.ParseArguments<CommandLineOptions>(args)
@@ -14,7 +15,16 @@ namespace AppricotTestProject
         private static void Run(CommandLineOptions options)
         {
             Console.WriteLine("Parser success");
-            string? inputtedPathFromCommandLine = options.Path;
+
+            OutputFileSystemItems(
+                SaveFileSystemItems(
+                    GetFileSystemItems(options.Path)
+                    )
+                , options.outputType);
+        }
+
+        private static IEnumerable<FileSystemCollector.FileSystemCollectorItem> GetFileSystemItems(string? pathToTargetFolder) {
+            string? inputtedPathFromCommandLine = pathToTargetFolder;
             IEnumerable<FileSystemCollector.FileSystemCollectorItem>? fileSystemInfoCollection = null;
             if (InputDataManager.AnalyzeForCorrectnessTargetPath(inputtedPathFromCommandLine))
             {
@@ -24,11 +34,22 @@ namespace AppricotTestProject
             {
                 fileSystemInfoCollection = FileSystemCrawler.Walk(new DirectoryInfo($@"{DefaultPaths.DefaultFolderPathForCrawl}"), 0);
             }
+            return fileSystemInfoCollection;
+        }
 
-            foreach (var fileSystemInfoItem in fileSystemInfoCollection)
+        private static List<FileSystemCollector.FileSystemCollectorItem> SaveFileSystemItems(IEnumerable<FileSystemCollector.FileSystemCollectorItem> fileSystemItems)
+        {
+            foreach (var fileSystemInfoItem in fileSystemItems)
             {
-                FileSystemPresentator.PrintFileSystemInfoItem(fileSystemInfoItem, options.outputType);
+                FileSystemCollector.fileSystemCollectorItems.Add(fileSystemInfoItem);
             }
+
+            return FileSystemCollector.fileSystemCollectorItems;
+        }
+
+        private static void OutputFileSystemItems(List<FileSystemCollector.FileSystemCollectorItem> fileSystemItems, OutputTypes outputType)
+        {
+            FileSystemPresentator.PrintFileSystemItems(fileSystemItems, outputType);
         }
 
         private static void HandleParseError(IEnumerable<Error> errs)
