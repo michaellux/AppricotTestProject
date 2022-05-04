@@ -11,7 +11,6 @@ namespace AppricotTestProject
         public static class FileSystemCrawlerState
         {
             public static int currentLevelInHierarchy = 0;
-            public static int currentLevelSubFolderInHierarchy = 0;
         }
 
         //based on: https://csharp.webdelphi.ru/algoritm-obxoda-dereva-katalogov-v-c-s-ispolzovaniem-rekursii/
@@ -21,10 +20,11 @@ namespace AppricotTestProject
             DirectoryInfo[]? subDirs = null;
 
             yield return new FileSystemCollector.FileSystemCollectorItem(FileSystemCrawlerState.currentLevelInHierarchy, targetDirectoryInfo);
-            if (levelInHierarchy == 0)
-            {
-                FileSystemCrawlerState.currentLevelInHierarchy++;
-            }
+
+            Console.WriteLine($"\nНачинаем просматривать папки и файлы вложенные в папку (поэтому увеличиваем уровень): {targetDirectoryInfo.Name} \n");
+            FileSystemCrawlerState.currentLevelInHierarchy++;
+            Console.WriteLine("\nТекущий уровень: " + FileSystemCrawlerState.currentLevelInHierarchy + "\n");
+
             //ReturnCurrentDirectoryWithFiles
             try
             {
@@ -39,28 +39,30 @@ namespace AppricotTestProject
                 Console.WriteLine(e.Message);
             }
 
-            if (files == null) yield break;
+            if (files == null)
+            {
+                Console.WriteLine("\nФайлов нет.\n");
+                yield break;
+            }
 
-            if (levelInHierarchy != 0) { FileSystemCrawlerState.currentLevelInHierarchy++; }
             foreach (var file in files)
             {
                 yield return new FileSystemCollector.FileSystemCollectorItem(FileSystemCrawlerState.currentLevelInHierarchy, file);
             }
+
             //WalkBySubDirectories
             subDirs = targetDirectoryInfo.GetDirectories();
+           
             foreach (var dirInfo in subDirs)
             {
-                FileSystemCrawlerState.currentLevelSubFolderInHierarchy = FileSystemCrawlerState.currentLevelInHierarchy;
-                
                 foreach (var fileSystemCollectorItem in Walk(dirInfo, FileSystemCrawlerState.currentLevelInHierarchy))
                 {
                     yield return fileSystemCollectorItem;
                 }
-                FileSystemCrawlerState.currentLevelInHierarchy++;
-                FileSystemCrawlerState.currentLevelInHierarchy = FileSystemCrawlerState.currentLevelSubFolderInHierarchy;
             }
-            //yield return ReturnCurrentDirectoryWithFiles(targetDirectoryInfo, files);
-            //yield return WalkBySubDirectories(targetDirectoryInfo);
+            Console.WriteLine("Выходим из папки (поэтому понижаем уровень)");
+            FileSystemCrawlerState.currentLevelInHierarchy--;
+            Console.WriteLine("\nТекущий уровень: " + FileSystemCrawlerState.currentLevelInHierarchy + "\n");
         }
     }
 }
