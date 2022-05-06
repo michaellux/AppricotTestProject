@@ -17,7 +17,7 @@ namespace AppricotTestProject
             Console.WriteLine("Parser success");
             SaveFileSystemItems(GetFileSystemItems(options.Path));
             DefineFileSystemItemsProperties();
-            OutputFileSystemItems(options.outputType);
+            OutputFileSystemItems(options);
         }
 
         private static IEnumerable<FileSystemCollector.FileSystemCollectorItem> GetFileSystemItems(string? pathToTargetFolder) {
@@ -49,9 +49,9 @@ namespace AppricotTestProject
             FileSystemInfoDefiner.UpdateFileSystemInfo();
         }
 
-        private static void OutputFileSystemItems(OutputTypes outputType)
+        private static void OutputFileSystemItems(CommandLineOptions options)
         {
-            FileSystemPresentator.PrintFileSystemItems(outputType);
+            FileSystemPresentator.PrintFileSystemItems(options);
         }
 
         private static void HandleParseError(IEnumerable<Error> errs)

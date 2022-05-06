@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AppricotTestProject
 {
-    class DefaultPaths
+    static class DefaultPaths
     {
         public static string DefaultFolderPathForCrawl => Directory.GetCurrentDirectory();
-        public static string DefaultFilePathForOutput => $"{Directory.GetCurrentDirectory()}/sizes-{DateTime.Now.ToString("yyyy-MM-dd")}";
+        public static string DefaultFilePathForOutput => @$"{Directory.GetCurrentDirectory()}\sizes-{DateTime.Now.ToString("yyyy-MM-dd")}.txt";
     }
 }

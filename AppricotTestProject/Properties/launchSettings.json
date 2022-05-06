@@ -2,7 +2,7 @@
   "profiles": {
     "AppricotTestProject": {
       "commandName": "Project",
-      "commandLineArgs": "-p \"C:\\Users\\Michaellux.DESKTOP-MUO1A9P\\IdeaProjects\\WhiteBoard\""
+      "commandLineArgs": "-o \"C:\\Users\\Michaellux.DESKTOP-MUO1A9P\\source\\repos\\AppricotTestProject\\AppricotTestProject\\bin\\Debug\\size.txt\" -p \"C:\\Users\\Michaellux.DESKTOP-MUO1A9P\\IdeaProjects\\WhiteBoard\""
     }
   }
 }

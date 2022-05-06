@@ -6,24 +6,69 @@ using System.Threading.Tasks;
 
 namespace AppricotTestProject
 {
-    internal class FileSystemPresentator
+    internal static class FileSystemPresentator
     {
-        public static void PrintFileSystemItems(OutputTypes outputType)
+        public static void PrintFileSystemItems(CommandLineOptions options)
         {
-            if (outputType == OutputTypes.ToConsole)
-            {
-                foreach (var fileSystemInfoItem in FileSystemCollector.fileSystemCollectorItems)
+                if (options.Quite)
                 {
-                    Console.WriteLine($"{fileSystemInfoItem.LevelInHierarchy} {fileSystemInfoItem.Name} ({fileSystemInfoItem.Size} bytes)");
+                    WriteToFileAsync(options.Output, options.Humanread);
                 }
-            }
-            else if (outputType == OutputTypes.ToFile)
-            {
+                else
+                {
+                    foreach (var fileSystemInfoItem in FileSystemCollector.fileSystemCollectorItems)
+                    {
+                        string stringForOutput = ConstructStringFileSystemInfoItem(fileSystemInfoItem, options.Humanread);
+                        Console.WriteLine(stringForOutput);
+                    }
+                }
+        }
 
+        public static string ConstructStringFileSystemInfoItem(FileSystemCollector.FileSystemCollectorItem fileSystemCollectorItem, bool isHumanRead)
+        {
+            StringBuilder prefixLevelInHierarchy = new StringBuilder();
+            string fileSystemCollectorItemName = "";
+            string fileSystemCollectorItemSize = "";
+            string finalString = "";
+
+            if (fileSystemCollectorItem.LevelInHierarchy == 0)
+            {
+                prefixLevelInHierarchy.Insert(0, new string('-', 1));
+                fileSystemCollectorItemName = $"<{fileSystemCollectorItem.Name}>";
             }
             else
             {
-                throw new Exception("Unknown output type.");
+                prefixLevelInHierarchy.Insert(0, new string('-', (fileSystemCollectorItem.LevelInHierarchy) * 2));
+                fileSystemCollectorItemName = $"{fileSystemCollectorItem.Name}";
+            }
+
+            if (isHumanRead)
+            {
+                fileSystemCollectorItemSize = $@"({ fileSystemCollectorItem.Size })"; ;
+               
+            }
+            else
+            {
+                fileSystemCollectorItemSize = $@"({ fileSystemCollectorItem.Size} bytes)";
+            }
+
+            finalString = @$"{prefixLevelInHierarchy} {fileSystemCollectorItemName} ({fileSystemCollectorItem.Size} bytes)";
+
+            return finalString;
+        }
+
+        public static async Task WriteToFileAsync(string outputFilePath, bool isHumanRead)
+        {
+            string finalOutput = string.IsNullOrEmpty(outputFilePath) ? DefaultPaths.DefaultFilePathForOutput : outputFilePath;
+
+            using (StreamWriter writer = new StreamWriter(finalOutput, false))
+            {
+                foreach (var fileSystemInfoItem in FileSystemCollector.fileSystemCollectorItems)
+                {
+                    string stringForOutput = ConstructStringFileSystemInfoItem(fileSystemInfoItem, isHumanRead);
+
+                    await writer.WriteLineAsync(stringForOutput);
+                }
             }
         }
     }

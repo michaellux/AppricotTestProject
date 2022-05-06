@@ -9,15 +9,6 @@ namespace AppricotTestProject
 {
     internal class CommandLineOptions
     {
-        public readonly OutputTypes outputType;
-        private readonly OutputViews outputView;
-
-        public CommandLineOptions(bool quite, string path, string output, bool human)
-        {
-            this.outputType = quite ? OutputTypes.ToFile : OutputTypes.ToConsole;           
-            this.outputView = human ? OutputViews.ForHuman : OutputViews.InBytes;
-        }
-
         public CommandLineOptions() {}
 
         [Option(shortName: 'q', longName: "quite")]
