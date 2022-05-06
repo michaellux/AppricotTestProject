@@ -1,0 +1,2 @@
+# AppricotTestProject
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e6157772a1284da39428442efc2bdf57)](https://app.codacy.com/gh/michaellux/AppricotTestProject?utm_source=github.com&utm_medium=referral&utm_content=michaellux/AppricotTestProject&utm_campaign=Badge_Grade_Settings)
