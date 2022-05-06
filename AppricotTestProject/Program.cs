@@ -15,12 +15,9 @@ namespace AppricotTestProject
         private static void Run(CommandLineOptions options)
         {
             Console.WriteLine("Parser success");
-
-            OutputFileSystemItems(
-                SaveFileSystemItems(
-                    GetFileSystemItems(options.Path)
-                    )
-                , options.outputType);
+            SaveFileSystemItems(GetFileSystemItems(options.Path));
+            DefineFileSystemItemsProperties();
+            OutputFileSystemItems(options.outputType);
         }
 
         private static IEnumerable<FileSystemCollector.FileSystemCollectorItem> GetFileSystemItems(string? pathToTargetFolder) {
@@ -37,9 +34,9 @@ namespace AppricotTestProject
             return fileSystemInfoCollection;
         }
 
-        private static List<FileSystemCollector.FileSystemCollectorItem> SaveFileSystemItems(IEnumerable<FileSystemCollector.FileSystemCollectorItem> fileSystemItems)
+        private static List<FileSystemCollector.FileSystemCollectorItem> SaveFileSystemItems(IEnumerable<FileSystemCollector.FileSystemCollectorItem> fileSystemInfoItems)
         {
-            foreach (var fileSystemInfoItem in fileSystemItems)
+            foreach (var fileSystemInfoItem in fileSystemInfoItems)
             {
                 FileSystemCollector.fileSystemCollectorItems.Add(fileSystemInfoItem);
             }
@@ -47,9 +44,14 @@ namespace AppricotTestProject
             return FileSystemCollector.fileSystemCollectorItems;
         }
 
-        private static void OutputFileSystemItems(List<FileSystemCollector.FileSystemCollectorItem> fileSystemItems, OutputTypes outputType)
+        private static void DefineFileSystemItemsProperties()
         {
-            FileSystemPresentator.PrintFileSystemItems(fileSystemItems, outputType);
+            FileSystemInfoDefiner.UpdateFileSystemInfo();
+        }
+
+        private static void OutputFileSystemItems(OutputTypes outputType)
+        {
+            FileSystemPresentator.PrintFileSystemItems(outputType);
         }
 
         private static void HandleParseError(IEnumerable<Error> errs)

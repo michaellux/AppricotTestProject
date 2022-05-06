@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AppricotTestProject
 {
-    internal class FileSystemCrawler
+    internal static class FileSystemCrawler
     {
-        public static class FileSystemCrawlerState
+        internal static class FileSystemCrawlerState
         {
             public static int currentLevelInHierarchy = 0;
         }

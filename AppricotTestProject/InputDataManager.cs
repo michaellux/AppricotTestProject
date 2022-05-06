@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AppricotTestProject
 {
-    internal class InputDataManager
+    internal static class InputDataManager
     {
         public static bool AnalyzeForCorrectnessTargetPath(string? targetPath)
         {
