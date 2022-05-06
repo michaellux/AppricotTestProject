@@ -44,15 +44,32 @@ namespace AppricotTestProject
 
             if (isHumanRead)
             {
-                fileSystemCollectorItemSize = $@"({ fileSystemCollectorItem.Size })"; ;
-               
+                if (fileSystemCollectorItem.Size <= 1000)
+                {
+                    fileSystemCollectorItemSize = $@"({ fileSystemCollectorItem.Size} bytes)";
+                }
+                else if (fileSystemCollectorItem.Size <= 1e+6)
+                {
+                    var sizeKB = Math.Round(fileSystemCollectorItem.Size / 1024, 2);
+                    fileSystemCollectorItemSize = $@"({sizeKB} kilobytes)";
+                }
+                else if (fileSystemCollectorItem.Size <= 1e+9)
+                {
+                    var sizeMB = Math.Round(fileSystemCollectorItem.Size / (1024 * 1024), 2);
+                    fileSystemCollectorItemSize = $@"({sizeMB} megabytes)";
+                }
+                else if (fileSystemCollectorItem.Size <= 1e+12)
+                {
+                    var sizeGB = Math.Round(fileSystemCollectorItem.Size / (1024 * 1024 * 1024), 2);
+                    fileSystemCollectorItemSize = $@"({sizeGB} gigabytes)";
+                }
             }
             else
             {
                 fileSystemCollectorItemSize = $@"({ fileSystemCollectorItem.Size} bytes)";
             }
 
-            finalString = @$"{prefixLevelInHierarchy} {fileSystemCollectorItemName} ({fileSystemCollectorItem.Size} bytes)";
+            finalString = @$"{prefixLevelInHierarchy} {fileSystemCollectorItemName} {fileSystemCollectorItemSize}";
 
             return finalString;
         }

@@ -14,7 +14,6 @@ namespace AppricotTestProject
 
         private static void Run(CommandLineOptions options)
         {
-            Console.WriteLine("Parser success");
             SaveFileSystemItems(GetFileSystemItems(options.Path));
             DefineFileSystemItemsProperties();
             OutputFileSystemItems(options);
@@ -34,14 +33,12 @@ namespace AppricotTestProject
             return fileSystemInfoCollection;
         }
 
-        private static List<FileSystemCollector.FileSystemCollectorItem> SaveFileSystemItems(IEnumerable<FileSystemCollector.FileSystemCollectorItem> fileSystemInfoItems)
+        private static void SaveFileSystemItems(IEnumerable<FileSystemCollector.FileSystemCollectorItem> fileSystemInfoItems)
         {
             foreach (var fileSystemInfoItem in fileSystemInfoItems)
             {
                 FileSystemCollector.fileSystemCollectorItems.Add(fileSystemInfoItem);
             }
-
-            return FileSystemCollector.fileSystemCollectorItems;
         }
 
         private static void DefineFileSystemItemsProperties()

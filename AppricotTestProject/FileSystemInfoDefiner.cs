@@ -39,9 +39,9 @@ namespace AppricotTestProject
         }
 
         //source: https://github.com/appsoftwareltd/folder-size/blob/master/src/FolderSize/Program.cs
-        public static BigInteger DefineDirectorySize(DirectoryInfo targetDirectoryInfo, FileSystemCollector.FileSystemCollectorItem fileSystemCollectorItem)
+        public static double DefineDirectorySize(DirectoryInfo targetDirectoryInfo, FileSystemCollector.FileSystemCollectorItem fileSystemCollectorItem)
         {
-            BigInteger directorySizeBytes = 0;
+            double directorySizeBytes = 0;
 
             try
             {

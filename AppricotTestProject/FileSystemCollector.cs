@@ -28,7 +28,7 @@ namespace AppricotTestProject
             }
 
             public int LevelInHierarchy { get => levelInHierarchy; }
-            public BigInteger Size { get; set; }
+            public double Size { get; set; }
             public string Name { get => name; }
             public FileSystemInfo? FileSystemType => fileSystemType;
         }
