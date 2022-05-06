@@ -9,8 +9,6 @@ namespace AppricotTestProject
 {
     internal static class FileSystemInfoDefiner
     {
-        
-
         public static void UpdateFileSystemInfo()
         {
             foreach (var fileSystemInfoItem in FileSystemCollector.fileSystemCollectorItems)
