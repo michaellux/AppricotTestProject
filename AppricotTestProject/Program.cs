@@ -53,7 +53,10 @@ namespace AppricotTestProject
 
         private static void HandleParseError(IEnumerable<Error> errs)
         {
-            Console.WriteLine("Parser Fail");
+            foreach (var error in errs)
+            {
+                Console.WriteLine(error.ToString());
+            }
         }
     }
 }

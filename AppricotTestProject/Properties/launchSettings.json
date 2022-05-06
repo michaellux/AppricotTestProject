@@ -2,7 +2,7 @@
   "profiles": {
     "AppricotTestProject": {
       "commandName": "Project",
-      "commandLineArgs": "-p \"G:\\Игры\\Genesis_Order\" -h"
+      "commandLineArgs": "-p \"G:\\Игры\\Genesis_Order\""
     }
   }
 }
