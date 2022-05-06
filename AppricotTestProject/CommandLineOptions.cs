@@ -9,8 +9,6 @@ namespace AppricotTestProject
 {
     internal class CommandLineOptions
     {
-        public CommandLineOptions() {}
-
         [Option(shortName: 'q', longName: "quite")]
         public bool Quite { get; set; }
 

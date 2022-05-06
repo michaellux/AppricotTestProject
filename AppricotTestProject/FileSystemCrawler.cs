@@ -10,7 +10,8 @@ namespace AppricotTestProject
     {
         internal static class FileSystemCrawlerState
         {
-            internal static int currentLevelInHierarchy = 0;
+            private static int currentLevelInHierarchy;
+            internal static int CurrentLevelInHierarchy { get => currentLevelInHierarchy; set => currentLevelInHierarchy = value; }
         }
 
         //based on: https://csharp.webdelphi.ru/algoritm-obxoda-dereva-katalogov-v-c-s-ispolzovaniem-rekursii/
@@ -19,9 +20,9 @@ namespace AppricotTestProject
             FileInfo[]? files = null;
             DirectoryInfo[]? subDirs = null;
 
-            yield return new FileSystemCollector.FileSystemCollectorItem(FileSystemCrawlerState.currentLevelInHierarchy, targetDirectoryInfo);
+            yield return new FileSystemCollector.FileSystemCollectorItem(FileSystemCrawlerState.CurrentLevelInHierarchy, targetDirectoryInfo);
 
-            FileSystemCrawlerState.currentLevelInHierarchy++;
+            FileSystemCrawlerState.CurrentLevelInHierarchy++;
 
             try
             {
@@ -43,19 +44,19 @@ namespace AppricotTestProject
 
             foreach (var file in files)
             {
-                yield return new FileSystemCollector.FileSystemCollectorItem(FileSystemCrawlerState.currentLevelInHierarchy, file);
+                yield return new FileSystemCollector.FileSystemCollectorItem(FileSystemCrawlerState.CurrentLevelInHierarchy, file);
             }
 
             subDirs = targetDirectoryInfo.GetDirectories();
            
             foreach (var dirInfo in subDirs)
             {
-                foreach (var fileSystemCollectorItem in Walk(dirInfo, FileSystemCrawlerState.currentLevelInHierarchy))
+                foreach (var fileSystemCollectorItem in Walk(dirInfo, FileSystemCrawlerState.CurrentLevelInHierarchy))
                 {
                     yield return fileSystemCollectorItem;
                 }
             }
-            FileSystemCrawlerState.currentLevelInHierarchy--;
+            FileSystemCrawlerState.CurrentLevelInHierarchy--;
         }
     }
 }
